@@ -1,44 +1,44 @@
 <div class="container mt-5">
-    <h1 class="text-center">Todo List</h1>
+    <h1 class="text-center">List pasien</h1>
 
-    <!-- Form to Add New Todo -->
-    <form id="addTodoForm" class="my-4">
+    <!-- Form to Add New pasien -->
+    <form id="addpasienForm" class="my-4">
         <div class="input-group">
-            <input type="text" id="newTask" class="form-control" placeholder="Add a new task..." required>
+            <input type="text" id="newnama" class="form-control" placeholder="Add a new nama..." required>
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Add Task</button>
+                <button type="submit" class="btn btn-primary">Add nama</button>
             </div>
         </div>
     </form>
 
-    <!-- List of Todos -->
-    <ul id="todoList" class="list-group">
-        <% todos.forEach(todo=> { %>
+    <!-- List of pasien -->
+    <ul id="pasienList" class="list-group">
+        <% pasien.forEach(pasien=> { %>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="<%= todo.completed ? 'completed' : '' %>">
-                    <%= todo.task %>
+                <span class="<%= pasien.completed ? 'completed' : '' %>">
+                    <%= pasien.nama %>
                 </span>
                 <div>
-                    <button class="btn btn-sm btn-success mr-2 editBtn" data-id="<%= todo.id %>">Edit</button>
-                    <button class="btn btn-sm btn-danger deleteBtn" data-id="<%= todo.id %>">Delete</button>
+                    <button class="btn btn-sm btn-success mr-2 editBtn" data-id="<%= pasien.id %>">Edit</button>
+                    <button class="btn btn-sm btn-danger deleteBtn" data-id="<%= pasien.id %>">Delete</button>
                 </div>
             </li>
             <% }); %>
     </ul>
 
-    <!-- Edit Todo Modal -->
+    <!-- Edit pasien Modal -->
     <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Todo</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit pasien</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editTodoForm">
+                    <form id="editpasienForm">
                         <div class="form-group">
-                            <label for="editTask">Task</label>
-                            <input type="text" id="editTask" class="form-control" required>
+                            <label for="editnama">nama</label>
+                            <input type="text" id="editnama" class="form-control" required>
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
                     </form>
@@ -51,31 +51,31 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Add new todo
-        $('#addTodoForm').on('submit', function (e) {
+        // Add new pasien
+        $('#addpasienForm').on('submit', function (e) {
             e.preventDefault();
-            const task = $('#newTask').val().trim();
-            if (task) {
+            const nama = $('#newnama').val().trim();
+            if (nama) {
                 $.ajax({
-                    url: '/todos',
+                    url: '/pasien',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ task: task }),
-                    success: function (newTodo) {
-                        location.reload(); // Reload to show the new todo
+                    data: JSON.stringify({ nama: nama }),
+                    success: function (newpasien) {
+                        location.reload(); // Reload to show the new pasien
                     },
                     error: function (error) {
-                        console.error("Error adding task:", error.responseText);
+                        console.error("Error adding nama:", error.responseText);
                     }
                 });
             }
         });
 
-        // Delete a todo
+        // Delete a pasien
         $('.deleteBtn').on('click', function () {
             const id = $(this).data('id');
             $.ajax({
-                url: '/todos/' + id,
+                url: '/pasien/' + id,
                 type: 'DELETE',
                 success: function () {
                     location.reload(); // Reload to show updated list
@@ -83,27 +83,27 @@
             });
         });
 
-        // Show edit modal with the current task
+        // Show edit modal with the current nama
         let editId;
         $('.editBtn').on('click', function () {
             editId = $(this).data('id');
-            const currentTask = $(this).closest('li').find('span').text();
-            $('#editTask').val(currentTask);
+            const currentnama = $(this).closest('li').find('span').text();
+            $('#editnama').val(currentnama);
             $('#editModal').modal('show');
         });
 
-        // Update todo on form submission
-        $('#editTodoForm').on('submit', function (e) {
+        // Update pasien on form submission
+        $('#editpasienForm').on('submit', function (e) {
             e.preventDefault();
-            const task = $('#editTask').val().trim();
-            if (task) {
+            const nama = $('#editnama').val().trim();
+            if (nama) {
                 $.ajax({
-                    url: '/todos/' + editId,
+                    url: '/pasien/' + editId,
                     type: 'PUT',
-                    data: JSON.stringify({ task: task, completed: false }),
+                    data: JSON.stringify({ nama: nama, completed: false }),
                     contentType: 'application/json',
                     success: function () {
-                        location.reload(); // Reload to show the updated todo
+                        location.reload(); // Reload to show the updated pasien
                     }
                 });
             }

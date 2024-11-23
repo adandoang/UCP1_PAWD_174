@@ -6,13 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        .full-height {
+            min-height: 75vh; /* Full viewport height */
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Welcome to the Home Page!</h1>
-        <p>This is the home page of our application.</p>
-        <a href="/contact" class="btn btn-primary">Go to Contact Page</a>
+    <div class="container d-flex justify-content-center align-items-center full-height">
+        <div class="text-center">
+            <h1>Welcome to the Home Page!</h1>
+            <p>This is the home page of our application.</p>
+        </div>
     </div>
 </body>
 
